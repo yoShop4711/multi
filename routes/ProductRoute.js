@@ -155,19 +155,12 @@ ProductRoute.put('/api/update_product/:id', verify, authSeller, asyncHandler(asy
 
 }))
 
-ProductRoute.delete('/api/delete_product/:id', verify, asyncHandler(async(req, res) => {
+ProductRoute.delete('/api/delete_product/:id', verify,  authAdmin, asyncHandler(async(req, res) => {
 
   const{id} = req.params
 
   const product = await Product.findById(id)
-  const seller = await User.findById(req.user)
-
-
-
-  if ( product.createdBy.toString() !== seller._id.toString()) {
-    return res.json({ msg: 'Access is denied.' });
-  }
-
+  
   await Product.findByIdAndDelete(product)
 
   res.json({msg: 'deleted'})
