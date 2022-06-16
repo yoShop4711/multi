@@ -152,4 +152,13 @@ res.json({msg: 'user has been succesfully upgraded to seller.'})
 }))
 
 
+AuthRoute.post('/user/show_users', verify, authAdmin, asyncHandler(async(req, res) => {
+const users = await User.find()
+
+res.json({users})
+
+
+}))
+
+
 module.exports = AuthRoute;
