@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const verify = require("../middleware/verify");
 const authAdmin = require("../middleware/authAdmin");
+const authSeller = require("../middleware/authSeller");
 
 
 AuthRoute.post(
@@ -151,14 +152,25 @@ res.json({msg: 'user has been succesfully upgraded to seller.'})
 
 }))
 
+AuthRoute.post('/user/show_user/:id', verify, authAdmin, asyncHandler(async(req, res) => {
+
+const {id} = req.params
+
+const user = await User.findById(id).select('-password')
+
+res.json({user})
+
+}))
+
 
 AuthRoute.post('/user/show_users', verify, authAdmin, asyncHandler(async(req, res) => {
-const users = await User.find()
+const users = await User.find().select('-password')
 
 res.json({users})
 
 
 }))
+
 
 
 module.exports = AuthRoute;
