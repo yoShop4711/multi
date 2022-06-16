@@ -6,6 +6,8 @@ const port  = process.env.PORT || 5500
 const cors = require('cors')
 const AuthRoute =  require('./routes/AuthRoute')
 const ProductRoute = require('./routes/ProductRoute')
+const CategoryRoute = require('./routes/CategoryRoute')
+
 
 
 mongoose.connect(process.env.MONGOURL)
@@ -24,6 +26,7 @@ db.once('open', function(){
 
   app.use(AuthRoute)
   app.use(ProductRoute)
+  app.use(CategoryRoute)
 
 
   app.listen(port, () => {
