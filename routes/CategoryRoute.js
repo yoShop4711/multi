@@ -3,7 +3,6 @@ const Category = require('../models/categoryModel')
 const asyncHandler = require('express-async-handler')
 const verify = require('../middleware/verify')
 const authSeller = require('../middleware/authSeller')
-const authSeller = require('../middleware/authSeller')
 const authAdmin = require('../middleware/authAdmin')
 
 

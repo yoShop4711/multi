@@ -4,6 +4,7 @@ const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const verify = require("../middleware/verify");
+const authAdmin = require("../middleware/authAdmin");
 
 
 AuthRoute.post(
@@ -134,6 +135,21 @@ AuthRoute.put(
     });
   })
 );
+
+AuthRoute.post('/user/change_role/:id', verify, authAdmin, asyncHandler(async(req, res) => {
+
+const {id} = req.params
+
+await User.findByIdAndUpdate(
+  id,
+  req.body,
+  {new: true}
+  
+)
+
+res.json({msg: 'user has been succesfully upgraded to seller.'})
+
+}))
 
 
 module.exports = AuthRoute;
