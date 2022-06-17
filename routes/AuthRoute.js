@@ -172,5 +172,22 @@ res.json({users})
 }))
 
 
+AuthRoute.put('/user/edit_seller/:id', verify, authAdmin, asyncHandler(async(req, res) => {
+
+const {id} = req.params
+
+await User.findByIdAndUpdate(
+  id,
+  req.body,
+  {new: true}
+)
+
+res.json({msg: 'seller account successfully updated.'})
+
+}))
+
+
+
+
 
 module.exports = AuthRoute;
