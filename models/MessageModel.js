@@ -1,21 +1,21 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// Create Schema for Users
+
 const MessageSchema = new Schema({
-    conversation: {
+    chat: {
         type: Schema.Types.ObjectId,
-        ref: 'Conversation',
+        ref: 'Chat',
     },
-    to: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-    },
-    from: {
+    readBy: {
         type: Schema.Types.ObjectId,
         ref: 'User',
     },
-    body: {
+    sender: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+    },
+    content: {
         type: String,
         required: true,
     },

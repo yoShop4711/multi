@@ -20,10 +20,19 @@ db.once('open', function(){
     console.log("connected to database");
   });
 
+  const io = require("socket.io")(3300)
+
   app.use(cors())
   app.use('/uploads',express.static('uploads'));
   app.use(express.json())
   app.use(express.urlencoded({extended: true}))
+
+
+  app.use(function (req, res, next) {
+    req.io = io;
+    next();
+  });
+  
 
   app.use(AuthRoute)
   app.use(ProductRoute)
