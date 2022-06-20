@@ -32,21 +32,8 @@ MessageRoute.post('/message/send/:id', verify,  asyncHandler(async(req, res) => 
         }
       });
 
-      res.json({msg: "sent b"})
+      res.json({message})
   
-
-    // message = await message.populate("sender", "username")
-    // message = await message.populate("readBy")
-    // message = await User.populate(message).exec(function (error, messages) {
-    //     console.log(JSON.stringify(messages, null, "\t"));
-    //   });
-
-    // // await Chat.findByIdAndUpdate(req.body.chatId, { latestMessage: message });
-
-    // res.json(message);
-
-
-
 
 
 }))
