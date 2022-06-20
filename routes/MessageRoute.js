@@ -16,15 +16,34 @@ MessageRoute.post('/message/send/:id', verify,  asyncHandler(async(req, res) => 
         content: req.body.content
     }
 
-    let message = await Message.create(newMessage)
+    let message = await Message(newMessage)
 
-    message = await message.populate("sender", "username")
-    message = await message.populate("readBy")
-    // message = await User.populate(message);
 
-    // await Chat.findByIdAndUpdate(req.body.chatId, { latestMessage: message });
 
-    res.json(message);
+
+    await message.save(function (error) {
+        if (!error) {
+          Message.find({})
+            .populate("sender", "username")
+            .populate("readBy", "username")
+            .exec(function (error, messages) {
+              console.log(JSON.stringify(messages, null, "\t"));
+            });
+        }
+      });
+
+      res.json({msg: "sent b"})
+  
+
+    // message = await message.populate("sender", "username")
+    // message = await message.populate("readBy")
+    // message = await User.populate(message).exec(function (error, messages) {
+    //     console.log(JSON.stringify(messages, null, "\t"));
+    //   });
+
+    // // await Chat.findByIdAndUpdate(req.body.chatId, { latestMessage: message });
+
+    // res.json(message);
 
 
 
