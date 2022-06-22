@@ -4,14 +4,18 @@
   "description": "multi vendor e-commerce website for yoShop(Stephen Nkhoma)",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon server.js",
-    "start": "nodemon server.js"
+    "server": "node server.js",
+    "start": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+
   },
   "author": "Mecury Web",
   "license": "ISC",
   "dependencies": {
     "@withvoid/make-validation": "^1.0.5",
     "bcrypt": "^5.0.1",
+    "concurrently": "^7.2.2",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
