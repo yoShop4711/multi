@@ -18,11 +18,30 @@ function Register() {
 
   };
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    
+    
+      await axios.post('/auth/register', {...values})
+
+      localStorage.setItem('firstLogin', true)
+
+      window.location.href = '/login'
+    
+      
+        
+    
+
+    
+
+
+  }
+
   return (
     <div className="login_page">
       <h2>Register</h2>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="name">Full Name</label>
           <input
