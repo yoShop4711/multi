@@ -47,6 +47,7 @@ AuthRoute.post(
 AuthRoute.post(
   "/auth/login",
   asyncHandler(async (req, res) => {
+    try{
     const { username, password } = req.body;
 
     const userExists = await User.findOne({ username }).select("+password");
@@ -70,7 +71,14 @@ AuthRoute.post(
     } else {
       res.json({ msg: "check your password again" });
     }
+  }
+  catch(err) {
+    return res.status(500).json({msg: err.message})
+
+  }
+
   })
+
 );
 
 AuthRoute.post(

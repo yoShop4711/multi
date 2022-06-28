@@ -1,26 +1,46 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./auth.css";
 import axios from "axios";
+import { showErrMsg, showSuccessMsg } from "../notifications/Notification"
+
+
 
 function Login() {
+  const navigate = useNavigate()
   const [values, setValues] = useState({ username: "", password: "" });
+
+    const {username, password, err, success} = values
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setValues({ ...values, [name]: value });
+    setValues({...values, [name]:value, err: '', success: ''})
+
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
-     await axios.post('/auth/login', {...values})
-    
 
-    localStorage.setItem('firstLogin', true)
-            
-    window.location.href = "/"; }
+    try {
+      const res = await axios.post('/auth/login', {username, password})
+        setValues({...values, err: '', success: res.data.msg})
+
+
+        localStorage.setItem('firstLogin', true)
+
+        navigate("../shop", { replace: true });
+
+        
+        // window.location.href = "/";
+    } catch (err) {
+      err.response.data.msg && 
+      setValues({...values, err: err.response.data.msg, success: ''})
+
+    }
+
     
+  }
     
 
 
@@ -29,6 +49,9 @@ function Login() {
   return (
     <div className="login_page">
       <h2>Login</h2>
+      {err && showErrMsg(err)}
+            {success && showSuccessMsg(success)}
+
 
       <form onSubmit={handleSubmit}>
         <div>
