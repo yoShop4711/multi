@@ -11,9 +11,9 @@ const authSeller = require("../middleware/authSeller");
 AuthRoute.post(
   "/auth/register",
   asyncHandler(async (req, res) => {
-    const { fullname, username, email, password, location } = req.body;
+    const { fullname, username, email, password, location, question } = req.body;
 
-    if (!fullname || !username || !email || !password || !location) {
+    if (!fullname || !username || !email || !question || !password || !location ) {
       res.json({ msg: "input box cannot be empty!" });
     }
 
@@ -36,6 +36,7 @@ AuthRoute.post(
         fullname,
       username,
       email,
+      question,
       password: hashedPassword,
       location,
     });
@@ -81,15 +82,19 @@ AuthRoute.post(
 AuthRoute.post(
   "/auth/forgot_password",
   asyncHandler(async (req, res) => {
-    const { email } = req.body;
+    const { question, email } = req.body;
 
-    if (!email) {
-      res.json({ msg: "field cannot be empty." });
+    if (!question || !email) {
+      res.json({ msg: "fields cannot be empty." });
     }
 
     const emailFound = await User.findOne({ email });
+    const questionFound = await User.findOne({ question });
 
-    if (emailFound) {
+    // res.json({emailFound, questionFound})
+
+
+    if (emailFound && questionFound) {
       const accessToken = jwt.sign(
         { id: emailFound._id },
         process.env.ACCESS_TOKEN,
@@ -98,7 +103,7 @@ AuthRoute.post(
 
       res.json({ accessToken });
     } else {
-      res.json({ msg: "This email was not found. Please register." });
+      res.json({ msg: "please contact the admin to help you in password reset." });
     }
   })
 );

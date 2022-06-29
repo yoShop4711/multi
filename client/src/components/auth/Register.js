@@ -10,6 +10,8 @@ function Register() {
     email: "",
     password: "",
     location: "",
+    question: ""
+
   });
 
   const handleChange = (event) => {
@@ -90,6 +92,18 @@ function Register() {
             onChange={handleChange}
           />
         </div>
+        <div>
+          <label htmlFor="question">Enter a unique word to help in password rest</label>
+          <input
+            type="text"
+            placeholder="Enter a unique word"
+            id="question"
+            name="question"
+            value={values.question}
+            onChange={handleChange}
+          />
+        </div>
+
 
         <div>
           <label htmlFor="password">Password</label>

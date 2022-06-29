@@ -10,6 +10,12 @@ function Forgot() {
                 
                 <label htmlFor="email">Enter your email address</label>
                 <input type="email" name="email" id="email"  />
+
+                <label htmlFor="answer">Enter your unique word</label>
+                <input type="text" name="" id="question"  />
+
+                
+
                 <button>Verify your email</button>
             </div>
         </div>
