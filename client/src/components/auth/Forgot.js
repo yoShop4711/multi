@@ -17,11 +17,11 @@ function Forgot() {
 
     }
 
-    const handleSubmit = async(event) => {
-        event.preventDefault();
+    const handleSubmit = async() => {
+        
         const res = await axios.post('/auth/forgot_password', {...values})
 
-        console.log(res.data.accessToken);
+        // console.log(res.data.accessToken);
         if(res.data.msg) {
             alert(res.data.msg)
         } else{

@@ -6,21 +6,20 @@ import './auth.css'
 function Reset() {
 
     const location = useLocation()
-    const token = location.state.data.accessToken
+    const token = location.state.data
     const[password, setPassword] = useState("")
 
     const handleChange = (event) => {
         setPassword(event.target.value)
     }
 
-    console.log(token);
 
-    const handleSubmit = async(event) => {
+    const handleSubmit = async() => {
 
-        event.preventDefault();
+        
 
          await axios.put('/auth/reset_password', {password}, {
-            headers: {Authorization: token }
+            headers: {Authorization: `Bearer ${token}`}
          })
 
          window.location.href = "/login"
