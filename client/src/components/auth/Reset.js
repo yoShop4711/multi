@@ -1,6 +1,33 @@
+import axios from "axios"
+import { useState } from "react"
+import { useLocation } from "react-router-dom"
 import './auth.css'
 
 function Reset() {
+
+    const location = useLocation()
+    const token = location.state.data.accessToken
+    const[password, setPassword] = useState("")
+
+    const handleChange = (event) => {
+        setPassword(event.target.value)
+    }
+
+    console.log(token);
+
+    const handleSubmit = async(event) => {
+
+        event.preventDefault();
+
+         await axios.put('/auth/reset_password', {password}, {
+            headers: {Authorization: token }
+         })
+
+         window.location.href = "/login"
+        
+
+
+    }
     
 
     
@@ -10,13 +37,11 @@ function Reset() {
 
             <div className="row">
                 
-                <label htmlFor="password">Password</label>
-                <input type="password" name="password" id="password"  />
+                <label htmlFor="password">New Password</label>
+                <input type="text" name="password" id="password" value={password} onChange={handleChange}  />
 
-                <label htmlFor="cf_password">Confirm Password</label>
-                <input type="password" name="cf_password" id="cf_password"  />         
-
-                <button>Reset Password</button>
+                
+                <button onClick={handleSubmit}>Reset Password</button>
             </div>
         </div>
     )

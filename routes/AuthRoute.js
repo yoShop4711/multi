@@ -91,7 +91,7 @@ AuthRoute.post(
     const emailFound = await User.findOne({ email });
     const questionFound = await User.findOne({ question });
 
-    // res.json({emailFound, questionFound})
+  
 
 
     if (emailFound && questionFound) {
