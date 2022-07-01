@@ -18,23 +18,44 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    
-      const res = await axios.post('/auth/login', {...values})
+  
+      
+
+      const res = await axios.post('/auth/login', {...values} )
+      // console.log(res)
+
+      const roles = res.data.userExists.role
+
 
       
-      if(res.data.msg) {
+if(res.data.accessToken && roles === 0  ) {
+
+  localStorage.setItem('token', res.data.accessToken);
+  navigate("/register");
+
+  console.log("yes bos");
+
+} else if(res.data.accessToken && roles === 1) {
+  localStorage.setItem('token', res.data.accessToken);
+  navigate("/");
+
+  console.log("sup");
+
+}
+
+      
+    //   if(res.data.msg) {
             
-        alert(res.data.msg)
+    //     alert(res.data.msg)
 
-    } else{
-        localStorage.setItem('firstLogin', true)
-        navigate('/')
+    // } else if(res.data.userExists.role === "1") {
+    //     localStorage.setItem('firstLogin', true)
+    //     navigate('/')
         
-    }
+    // }
 
         
-        
-        // window.location.href = "/";
+  
   
 
     

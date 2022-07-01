@@ -62,13 +62,15 @@ AuthRoute.post(
     const passwordMatch = await bcrypt.compare(password, userExists.password);
 
     if (passwordMatch) {
-      const accessToken = jwt.sign(
+      const accessToken = await jwt.sign(
         { id: userExists._id },
         process.env.ACCESS_TOKEN,
         { expiresIn: 60 * 60 }
       );
 
-      res.json({ accessToken });
+      const { _id, fullname, username, email, role } = userExists
+
+      res.json({ accessToken, userExists: { _id, email, fullname, username, role } });
     } else {
       res.json({ msg: "check your password again" });
     }
@@ -147,7 +149,7 @@ AuthRoute.put(
   })
 );
 
-AuthRoute.post('/user/change_role/:id', verify, authAdmin, asyncHandler(async(req, res) => {
+AuthRoute.post('/auth/change_role/:id', verify, authAdmin, asyncHandler(async(req, res) => {
 
 const {id} = req.params
 
@@ -162,7 +164,7 @@ res.json({msg: 'user has been succesfully upgraded to seller.'})
 
 }))
 
-AuthRoute.post('/user/show_user/:id', verify, authAdmin, asyncHandler(async(req, res) => {
+AuthRoute.post('/auth/show_user/:id', verify, authAdmin, asyncHandler(async(req, res) => {
 
 const {id} = req.params
 
@@ -173,7 +175,7 @@ res.json({user})
 }))
 
 
-AuthRoute.post('/user/show_users', verify, authAdmin, asyncHandler(async(req, res) => {
+AuthRoute.post('/auth/show_users', verify, authAdmin, asyncHandler(async(req, res) => {
 const users = await User.find().select('-password')
 
 res.json({users})
@@ -182,7 +184,7 @@ res.json({users})
 }))
 
 
-AuthRoute.put('/user/edit_seller/:id', verify, authAdmin, asyncHandler(async(req, res) => {
+AuthRoute.put('/auth/edit_seller/:id', verify, authAdmin, asyncHandler(async(req, res) => {
 
 const {id} = req.params
 
