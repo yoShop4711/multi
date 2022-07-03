@@ -4,6 +4,7 @@ const app = express()
 const mongoose = require('mongoose')
 const port  = process.env.PORT || 5500
 const cors = require('cors')
+const cookieParser = require('cookie-parser')
 const AuthRoute =  require('./routes/AuthRoute')
 const ProductRoute = require('./routes/ProductRoute')
 const CategoryRoute = require('./routes/CategoryRoute')
@@ -26,6 +27,7 @@ db.once('open', function(){
   app.use('/uploads',express.static('uploads'));
   app.use(express.json())
   app.use(express.urlencoded({extended: true}))
+  app.use(cookieParser())
 
 
   app.use(function (req, res, next) {

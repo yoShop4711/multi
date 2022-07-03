@@ -5,10 +5,12 @@ import Forgot from "./components/auth/Forgot"
 import Products from "./components/products/Products"
 import Reset from "./components/auth/Reset"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
+import { DataProvider } from "./GlobalState"
 
 
 function App() {
   return(
+    <DataProvider>
     <Router>
   <div className='container'>
   <Header />
@@ -30,7 +32,9 @@ function App() {
   
   </div>
   
-  </Router>)
+  </Router>
+  </DataProvider>
+  )
 }
 
 export default App
