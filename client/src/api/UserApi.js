@@ -15,7 +15,7 @@ function UserApi(token) {
                 })
                 setIsLogged(true)
             res.data.role === 1 ? setIsSeller(true) : setIsSeller(false) 
-            console.log(res.data);
+            // console.log(res.data);
         }
 
             catch(err) {

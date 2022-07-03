@@ -182,19 +182,14 @@ AuthRoute.put(
   })
 );
 
-AuthRoute.put(
+AuthRoute.get(
   "/auth/logout",
   verify,
   asyncHandler(async (req, res) => {
-    const authHeader = req.headers["authorization"];
+    res.clearCookie('refreshtoken', {path: '/auth/refresh_token'})
+            return res.json({msg: "Logged out"})
 
-    jwt.sign(authHeader, "", { expiresIn: 1 }, (logout, err) => {
-      if (logout) {
-        res.send({ msg: "You have been Logged Out" });
-      } else {
-        res.send({ msg: "Error" });
-      }
-    });
+    
   })
 );
 

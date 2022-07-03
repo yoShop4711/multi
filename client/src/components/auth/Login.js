@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./auth.css";
 import axios from "axios";
 
 
 function Login() {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const [values, setValues] = useState({ username: "", password: "" });
 
     
@@ -50,7 +50,7 @@ function Login() {
 
     } else  {
         localStorage.setItem('firstLogin', true)
-        navigate('/')
+        window.location.href = '/'
         
     }
 
