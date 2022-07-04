@@ -44,26 +44,26 @@ function Header() {
     
     
 
-    // const styleMenu = {
-    //     left: menu ? 0 : "-100%"
-    // }
+    const styleMenu = {
+        left: menu ? 0 : "-100%"
+    }
 
     return (
         <header>
-            <div className="menu" >
+            <div className="menu" onClick={() => setMenu(!menu) } >
                 <img src={Menu} alt="menu" width="30" />
             </div>
 
             <div className="logo">
-                <h3>
+                <h1>
                  <Link to="/"> yoShop </Link>
-                </h3>
+                </h1>
             </div>
 
-            <ul>
+            <ul style={styleMenu}>
                 <li> <Link to="/">Shop</Link> </li>
-                { isLogged ? loggedRouter() : <li> <Link to="/login">Login</Link> </li> }
-                <li> <Link to="/register">Register</Link> </li>
+                { isLogged ? loggedRouter() : <li> <Link to="/login">Login ✥ Register </Link> </li> }
+            
 
 
 
@@ -71,7 +71,7 @@ function Header() {
 
             
 
-                <li >
+                <li onClick={() => setMenu(!menu)} >
                     <img src={Close} alt="close" width="30" className="menu" />
                 </li>
 
