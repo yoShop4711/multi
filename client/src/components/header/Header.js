@@ -40,6 +40,16 @@ function Header() {
         )
     }
 
+    const sellerRouter = () => {
+
+        return(<>
+        
+        <li><Link to="/create_product">Create Product</Link></li>
+                <li><Link to="/category">Categories</Link></li>
+
+        </>)
+    }
+
     
     
     
@@ -56,22 +66,17 @@ function Header() {
 
             <div className="logo">
                 <h1>
-                 <Link to="/"> yoShop </Link>
+                 <Link to="/">{ isSeller ? state.username : 'yoShop' }</Link>
                 </h1>
             </div>
 
             <ul style={styleMenu}>
-                <li> <Link to="/">Shop</Link> </li>
+                <li> <Link to="/">{ isSeller ? 'Products' : 'Shop'}</Link> </li>
+                {isSeller && sellerRouter()}
+
+
                 { isLogged ? loggedRouter() : <li> <Link to="/login">Login ✥ Register </Link> </li> }
-            
-
-
-
-              
-
-            
-
-                <li onClick={() => setMenu(!menu)} >
+              <li onClick={() => setMenu(!menu)} >
                     <img src={Close} alt="close" width="30" className="menu" />
                 </li>
 
