@@ -249,7 +249,7 @@ try{
   if(!user) return res.status(400).json({msg: "User does not exist."})
 
   res.json(user)
-console.log(user);
+// console.log(user);
 
 // res.json(req.user)
 

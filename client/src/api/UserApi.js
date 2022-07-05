@@ -4,6 +4,9 @@ import axios from "axios"
 function UserApi(token) {
     const [isLogged, setIsLogged] = useState(false)
     const [isSeller, setIsSeller] = useState(false)
+    const [isAdmin, setIsadmin] = useState(false)
+    const[isBuyer, setIsbuyer] = useState(false)
+    const [owner, setOwner] = useState('')
 
     useEffect(() => {
 
@@ -15,7 +18,10 @@ function UserApi(token) {
                 })
                 setIsLogged(true)
             res.data.role === 1 ? setIsSeller(true) : setIsSeller(false) 
-            // console.log(res.data);
+            res.data.admin === 1 ? setIsadmin(true) : setIsadmin(false)
+            res.data.role === 0 ? setIsbuyer(true) : setIsbuyer(false)
+            setOwner(res.data.username)
+            // console.log(owner);
         }
 
             catch(err) {
@@ -36,14 +42,17 @@ function UserApi(token) {
         }
 
 
-    }, [token])
+    }, [token, owner])
 
 
 
     return{
 
 isLogged: [isLogged, setIsLogged],
-isSeller: [isSeller, setIsSeller]
+isSeller: [isSeller, setIsSeller],
+owner: [owner, setOwner],
+isAdmin: [isAdmin, setIsadmin],
+isBuyer: [isBuyer, setIsbuyer]
 
     
     

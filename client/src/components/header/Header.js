@@ -14,6 +14,9 @@ function Header() {
     const state = useContext(GlobalState)
     const[isLogged] = state.userApi.isLogged
     const[isSeller] = state.userApi.isSeller
+    const[owner] = state.userApi.owner
+    const[isAdmin] = state.userApi.isAdmin
+    const[isBuyer] = state.userApi.isBuyer
 
     const tok = state.token[0];
 
@@ -50,6 +53,38 @@ function Header() {
         </>)
     }
 
+    const adminRouter = () => {
+        return(<>
+        
+        <li><Link to="/delete_user">Delete User</Link></li>
+        <li><Link to="/upgrade_user">Upgrade User</Link></li>
+        
+        </>)
+    }
+
+    const buyerRouter = () => {
+        return(<>
+        
+        <li><Link to="/my_orders">my orders</Link></li>
+        
+        
+        </>)
+    }
+
+
+
+    const figureOut = () => {
+
+if(isSeller) {
+    return sellerRouter();
+} else if(isAdmin) {
+    return adminRouter()
+} else if(isBuyer) {
+    return buyerRouter()
+}
+
+    }
+
     
     
     
@@ -66,13 +101,13 @@ function Header() {
 
             <div className="logo">
                 <h1>
-                 <Link to="/">{ isSeller ? state.username : 'yoShop' }</Link>
+                 <Link to="/">{ figureOut() ? owner : 'yoShop' }</Link>
                 </h1>
             </div>
 
             <ul style={styleMenu}>
-                <li> <Link to="/">{ isSeller ? 'Products' : 'Shop'}</Link> </li>
-                {isSeller && sellerRouter()}
+                <li> <Link to="/">{ figureOut() ? 'Products' : 'Shop'}</Link> </li>
+                { figureOut()}
 
 
                 { isLogged ? loggedRouter() : <li> <Link to="/login">Login ✥ Register </Link> </li> }
