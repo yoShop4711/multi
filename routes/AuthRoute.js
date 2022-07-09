@@ -219,7 +219,7 @@ res.json({user})
 }))
 
 
-AuthRoute.post('/auth/show_users', verify, authAdmin, asyncHandler(async(req, res) => {
+AuthRoute.get('/auth/show_users', verify, authAdmin, asyncHandler(async(req, res) => {
 const users = await User.find().select('-password')
 
 res.json({users})

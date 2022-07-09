@@ -57,7 +57,10 @@ function Header() {
         return(<>
         
         <li><Link to="/delete_user">Delete User</Link></li>
-        <li><Link to="/upgrade_user">Upgrade User</Link></li>
+        <li><Link to="/show_users">Upgrade User</Link></li>
+        
+        
+        
         
         </>)
     }

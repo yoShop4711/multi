@@ -6,6 +6,8 @@ import Products from "./components/products/Products"
 import Reset from "./components/auth/Reset"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import { DataProvider } from "./GlobalState"
+import EditUser from "./components/admin/EditUser"
+import ShowUsers from "./components/admin/ShowUsers"
 
 
 function App() {
@@ -27,6 +29,10 @@ function App() {
   
   <Route path="/reset" element={<Reset />
 } />
+
+<Route path="/edit_user/:id" element={<EditUser />} />
+<Route path="/show_users" element={<ShowUsers />} />
+
   
   </Routes>
   

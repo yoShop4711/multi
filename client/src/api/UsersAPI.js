@@ -1,28 +1,25 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 
-function UserApi(token) {
+function UsersAPI(token) {
     const [isLogged, setIsLogged] = useState(false)
-    const [isSeller, setIsSeller] = useState(false)
     const [isAdmin, setIsadmin] = useState(false)
-    const[isBuyer, setIsbuyer] = useState(false)
-    const [owner, setOwner] = useState('')
-
+    const[users, setUsers] = useState({})
 
     useEffect(() => {
 
         if(token) {
-            const getUser = async() => {
+            const getUsers = async() => {
             try{
-                const res = await axios.get('/auth/user', {
+                const res = await axios.post('/auth/show_users', {
                     headers: {Authorization: `Bearer ${token}`}
                 })
                 setIsLogged(true)
-            res.data.role === 1 ? setIsSeller(true) : setIsSeller(false) 
+            
             res.data.admin === 1 ? setIsadmin(true) : setIsadmin(false)
-            res.data.role === 0 ? setIsbuyer(true) : setIsbuyer(false)
-            setOwner(res.data.username)
-            // console.log(owner);
+    
+            setUsers(res)
+            console.log(users);
         }
 
             catch(err) {
@@ -31,23 +28,22 @@ function UserApi(token) {
             }
 
 
-            getUser()
+            getUsers()
 
             
 
         }
 
 
-    }, [token, owner])
+    }, [token, users])
 
 
     return{
 
 isLogged: [isLogged, setIsLogged],
-isSeller: [isSeller, setIsSeller],
-owner: [owner, setOwner],
 isAdmin: [isAdmin, setIsadmin],
-isBuyer: [isBuyer, setIsbuyer]
+users: [users, setUsers]
+
 
     
     
@@ -55,4 +51,4 @@ isBuyer: [isBuyer, setIsbuyer]
     }
 }
 
-export default UserApi
+export default UsersAPI

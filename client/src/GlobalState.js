@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react"
 import axios from "axios"
 import UserApi from "./api/UserApi"
 
+
 export const GlobalState = createContext()
 
 export const DataProvider = ({children}) => {
@@ -16,6 +17,7 @@ useEffect(() => {
             const res = await axios.get('/auth/refresh_token', )
 
             setToken(res.data.accesstoken)
+            localStorage.setItem('token', res.data.accesstoken)
 
 
             setTimeout(() => {
@@ -31,7 +33,7 @@ useEffect(() => {
 
 const state = {
     token: [token, setToken],
-    userApi: UserApi(token),
+    userApi: UserApi(token)
 }
 
 return (
