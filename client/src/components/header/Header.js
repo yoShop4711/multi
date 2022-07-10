@@ -59,6 +59,8 @@ function Header() {
         <li><Link to="/delete_user">Delete User</Link></li>
         <li><Link to="/show_users">Show User</Link></li>
         <li><Link to="/show_sellers">Show Sellers</Link></li>
+        <li><Link to="/filter_users">Filter Users</Link></li>
+        
         
         
         

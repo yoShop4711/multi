@@ -10,6 +10,7 @@ import EditUser from "./components/admin/EditUser"
 import ShowUsers from "./components/admin/ShowUsers"
 import ShowSellers from "./components/admin/ShowSellers"
 import DeleteUser from "./components/admin/DeleteUser"
+import FilterUsers from "./components/admin/FilterUsers"
 
 
 function App() {
@@ -36,6 +37,9 @@ function App() {
 <Route path="/show_users" element={<ShowUsers />} />
 <Route path="/show_sellers" element={<ShowSellers />} />
 <Route path="/delete_user" element={<DeleteUser />} />
+<Route path="/filter_users" element={<FilterUsers />} />
+
+
 
 
   

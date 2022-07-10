@@ -5,9 +5,7 @@ import axios from "axios"
 import "./profile.css"
 
 function EditUser() {
-
-
-    
+  
 return(
     <div className="profile_page edit_user">
     <div className="row">
