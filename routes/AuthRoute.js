@@ -227,6 +227,22 @@ res.json({users})
 
 }))
 
+AuthRoute.get('/auth/show_sellers', verify, authAdmin, asyncHandler(async(req, res) => {
+
+const sellers = await User.aggregate([{
+$match: {role: 1}},
+{
+ $group: {_id: "$fullname"} 
+}])
+
+
+res.json({sellers})
+
+
+
+
+}) )
+
 
 AuthRoute.put('/auth/edit_seller/:id', verify, authAdmin, asyncHandler(async(req, res) => {
 

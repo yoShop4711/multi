@@ -1,7 +1,7 @@
 import  { useEffect, useState, useContext } from "react"
 import { GlobalState } from "../../GlobalState"
 import axios from 'axios'
-import { useNavigate, useParams } from "react-router-dom"
+import { DataGrid } from "@material-ui/data-grid"
 
 
 function ShowUsers() {
@@ -33,12 +33,65 @@ function ShowUsers() {
     }, [toke, isAdmin])
 
     
+    const cols = [
+        { field: 'id', headerName: 'ID', width: 300 },
+
+        {
+            field: 'fullname',
+            headerName: 'Fullname',
+            width: 150,
+        
+          },
+          {
+            field: 'username',
+            headerName: 'Username',
+            width: 150,
+        
+          },
+          {
+            field: 'email',
+            headerName: 'Email',
+        
+            width: 300,
+        
+          },
+          {
+            field: 'location',
+            headerName: 'Location',
+        
+            width: 150,
+        
+          }
+
+
+    ]
+
+    const rowData = users?.map(user => {
+return{
+    fullname: user?.fullname,
+    username: user?.username,
+    email: user?.email,
+    location: user?.location,
+    id: user?._id
+}
+
+    })
+
+    // const rows = []
     
 
 
             
-        return(<div>
+        return(<div style={{width: "100%", height: 400}} >
+<DataGrid 
 
+rows={rowData}
+columns={cols}
+pageSize={5}
+rowsPerPageOptions={[5]}
+
+
+/>
 
 
         
