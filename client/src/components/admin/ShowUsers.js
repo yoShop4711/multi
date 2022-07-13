@@ -2,6 +2,7 @@ import  { useEffect, useState, useContext } from "react"
 import { GlobalState } from "../../GlobalState"
 import axios from 'axios'
 import { DataGrid } from "@material-ui/data-grid"
+import { Link } from "react-router-dom"
 
 
 function ShowUsers() {
@@ -23,7 +24,7 @@ function ShowUsers() {
                 })
     
                 setUsers(res.data.users); 
-                console.log(res.data.users);         
+                       
                        }
         }
     
@@ -32,9 +33,13 @@ function ShowUsers() {
 
     }, [toke, isAdmin])
 
+
+
     
     const cols = [
-        { field: 'id', headerName: 'ID', width: 300 },
+        { field: 'id', headerName: 'ID', width: 300, renderCell: (id) => {
+            return <Link to={`/user/${id.value}`}>`${id.value}`</Link>
+        }},
 
         {
             field: 'fullname',
@@ -72,7 +77,7 @@ return{
     username: user?.username,
     email: user?.email,
     location: user?.location,
-    id: user?._id
+    id : user?._id 
 }
 
     })

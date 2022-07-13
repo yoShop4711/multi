@@ -6,7 +6,7 @@ import Products from "./components/products/Products"
 import Reset from "./components/auth/Reset"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import { DataProvider } from "./GlobalState"
-import EditUser from "./components/admin/EditUser"
+import User from "./components/admin/User"
 import ShowUsers from "./components/admin/ShowUsers"
 import ShowSellers from "./components/admin/ShowSellers"
 import DeleteUser from "./components/admin/DeleteUser"
@@ -33,7 +33,7 @@ function App() {
   <Route path="/reset" element={<Reset />
 } />
 
-<Route path="/edit_user/:id" element={<EditUser />} />
+<Route path="/user/:id" element={<User />} />
 <Route path="/show_users" element={<ShowUsers />} />
 <Route path="/show_sellers" element={<ShowSellers />} />
 <Route path="/delete_user" element={<DeleteUser />} />
