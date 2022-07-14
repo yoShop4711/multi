@@ -6,14 +6,48 @@ const jwt = require("jsonwebtoken");
 const verify = require("../middleware/verify");
 const authAdmin = require("../middleware/authAdmin");
 const authSeller = require("../middleware/authSeller");
+const multer = require("multer");
+
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./users/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, new Date().toISOString().replace(/:/g, "-") + file.originalname);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === "image/jpeg" ||
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/webp"
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5,
+  },
+  fileFilter: fileFilter,
+});
 
 
 AuthRoute.post(
   "/auth/register",
+  upload.array("userImage", 12)
+  ,
   asyncHandler(async (req, res) => {
-    const { fullname, username, email, password, location, question } = req.body;
+    const { fullname, username, email, password,location, question } = req.body;
 
-    if (!fullname || !username || !email || !question || !password || !location ) {
+    if (!fullname || !username || !email || !question || !password  || !location ) {
       res.json({ msg: "input box cannot be empty!" });
     }
 
@@ -32,12 +66,13 @@ AuthRoute.post(
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    await User.create({
+   const user = await User.create({
         fullname,
       username,
       email,
       question,
       password: hashedPassword,
+      userImage: req.files,
       location,
     });
 
@@ -53,7 +88,7 @@ AuthRoute.post(
 
 
 
-    res.json({ accesstoken });
+    res.json({ accesstoken, user });
   })
 );
 
@@ -244,17 +279,17 @@ res.json({sellers})
 }) )
 
 
-AuthRoute.put('/auth/edit_seller/:id', verify, authAdmin, asyncHandler(async(req, res) => {
+AuthRoute.put('/auth/edit_seller/:id',verify, authAdmin, asyncHandler(async(req, res) => {
 
 const {id} = req.params
 
-await User.findByIdAndUpdate(
+const upity = await User.findByIdAndUpdate(
   id,
   req.body,
   {new: true}
 )
 
-res.json({msg: 'seller account successfully updated.'})
+res.json({upity})
 
 }))
 

@@ -56,11 +56,33 @@ function User() {
     }, [id, users])
 
     if(single.length === 0) return null;
-    
+
+ const prof =  single.userImage.map((imgo) => {
+    return imgo.path
+ })
+
+    console.log(prof);
 
   
 return(
     <>
+
+<div className="detail">
+
+
+                
+                <div className="box-detail">
+                    <div className="row">
+                        <h2>{single.fullname}</h2>
+                        <h6>{single.username}</h6>
+                    </div>
+                    <span>{single.email}</span>
+                    <p>{single.location}</p>
+                    <p>{single.question}</p>
+                    
+                </div>
+            </div>
+
     
     
     </>

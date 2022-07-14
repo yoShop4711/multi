@@ -30,6 +30,12 @@ location: {
 type: String,
 required: true
 },
+userImage: {
+    type: Array,
+    required: true,
+    default: []
+
+},
 role: {
     type: Number,
         default: 0
