@@ -31,9 +31,8 @@ type: String,
 required: true
 },
 userImage: {
-    type: Array,
-    required: true,
-    default: []
+    data: Buffer,
+    contentType: String
 
 },
 role: {

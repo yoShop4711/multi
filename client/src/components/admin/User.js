@@ -3,6 +3,7 @@ import {GlobalState} from "../../GlobalState"
 import axios from "axios"
 import { useParams } from "react-router-dom"
 
+
 function User() {
     const[users, setUsers] = useState([])
     const[single, setSingle] = useState([])
@@ -56,20 +57,23 @@ function User() {
     }, [id, users])
 
     if(single.length === 0) return null;
+    const picture = single.userImage.data.data
 
- const prof =  single.userImage.map((imgo) => {
-    return imgo.path
- })
-
-    console.log(prof);
-
-  
+    const base64String =  window.btoa(
+        new Uint8Array(picture)
+          .reduce((data, byte) => data + String.fromCharCode(byte), '')
+      );
+      
+    console.log(base64String);
+       
 return(
     <>
 
 <div className="detail">
 
-
+    <img src={`data:image/jpg;base64, ${base64String}`} alt="hi" />
+     
+    
                 
                 <div className="box-detail">
                     <div className="row">

@@ -8,6 +8,8 @@ const cookieParser = require('cookie-parser')
 const AuthRoute =  require('./routes/AuthRoute')
 const ProductRoute = require('./routes/ProductRoute')
 const CategoryRoute = require('./routes/CategoryRoute')
+const path = require('path')
+
 
 
 
@@ -24,7 +26,7 @@ db.once('open', function(){
   const io = require("socket.io")(3300)
 
   app.use(cors())
-  app.use("/users", express.static(path.join(__dirname, 'users')));
+  app.use("/public", express.static(path.join(__dirname, '/public')));
   app.use(express.json())
   app.use(express.urlencoded({extended: true}))
   app.use(cookieParser())

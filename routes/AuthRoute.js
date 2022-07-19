@@ -7,74 +7,83 @@ const verify = require("../middleware/verify");
 const authAdmin = require("../middleware/authAdmin");
 const authSeller = require("../middleware/authSeller");
 const multer = require("multer");
+const path = require('path');
+const fs = require("fs");
+
 
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./users/");
+    cb(null, path.resolve(__dirname, '..', 'public'));
   },
   filename: function (req, file, cb) {
     cb(null, new Date().toISOString().replace(/:/g, "-") + file.originalname);
   },
 });
 
-const fileFilter = (req, file, cb) => {
-  if (
-    file.mimetype === "image/jpeg" ||
-    file.mimetype === "image/jpg" ||
-    file.mimetype === "image/png" ||
-    file.mimetype === "image/webp"
-  ) {
-    cb(null, true);
-  } else {
-    cb(null, false);
-  }
-};
+// const fileFilter = (req, file, cb) => {
+//   if (
+//     file.mimetype === "image/jpeg" ||
+//     file.mimetype === "image/jpg" ||
+//     file.mimetype === "image/png" ||
+//     file.mimetype === "image/webp"
+//   ) {
+//     cb(null, true);
+//   } else {
+//     cb(null, false);
+//   }
+// };
 
-const upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 1024 * 1024 * 5,
-  },
-  fileFilter: fileFilter,
-});
+
+const upload = multer({ storage });
+
 
 
 AuthRoute.post(
   "/auth/register",
-  upload.array("userImage", 12)
+  upload.single('userImage')
   ,
   asyncHandler(async (req, res) => {
-    const { fullname, username, email, password,location, question } = req.body;
+  
+
+  
+
+  let { fullname, username, email, password,location, question } = req.body;
 
     if (!fullname || !username || !email || !question || !password  || !location ) {
       res.json({ msg: "input box cannot be empty!" });
     }
 
-    const usernameExists = await User.findOne({ username });
+    const usernameExists = await  User.findOne({ username });
 
     if (usernameExists) {
       res.json({ msg: "The username you chose exists, please user another" });
     }
 
-    const emailExists = await User.findOne({ email });
+    const emailExists = await  User.findOne({ email });
 
     if (emailExists) {
       res.json({ msg: "The email exists, please user another" });
     }
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    
+  
+  const salt =  await bcrypt.genSalt(10);
+  const hashedPassword = await  bcrypt.hash(password, salt);
 
-   const user = await User.create({
-        fullname,
-      username,
-      email,
-      question,
-      password: hashedPassword,
-      userImage: req.files,
-      location,
-    });
+  const user = await User.create  ({
+      fullname,
+    username,
+    email,
+    question,
+    password: hashedPassword,
+    userImage: { 
+      data: fs.readFileSync("./public/" + req.file.filename),
+      contentType: "image/jpg"
+      },
+    
+    location,
+  });
 
     accesstoken = createAccessToken({id: User._id})
     const refreshtoken = createRefreshToken({id: User._id})
@@ -88,7 +97,7 @@ AuthRoute.post(
 
 
 
-    res.json({ accesstoken, user });
+    res.json({ accesstoken, user});
   })
 );
 
@@ -134,7 +143,7 @@ AuthRoute.post(
     }
   
 
-
+  
   })
 
 );
