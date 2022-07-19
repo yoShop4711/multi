@@ -275,9 +275,7 @@ AuthRoute.get('/auth/show_sellers', verify, authAdmin, asyncHandler(async(req, r
 
 const sellers = await User.aggregate([{
 $match: {role: 1}},
-{
- $group: {_id: "$fullname"} 
-}])
+])
 
 
 res.json({sellers})

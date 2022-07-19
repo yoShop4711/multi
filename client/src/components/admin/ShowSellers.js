@@ -2,11 +2,12 @@ import  { useEffect, useState, useContext } from "react"
 import { GlobalState } from "../../GlobalState"
 import axios from 'axios'
 import { DataGrid } from "@material-ui/data-grid"
+import { Link } from "react-router-dom"
 
 
 
 function ShowSellers() {
-    const[sellers, setSellers] = useState([])
+    const[vendors, setVendors] = useState([])
     const state = useContext(GlobalState)
     const[isAdmin] = state.userApi.isAdmin
 
@@ -23,8 +24,8 @@ function ShowSellers() {
                     }
                 })
     
-                setSellers(res.data.users); 
-                console.log(res.data.users);         
+                setVendors(res.data.sellers); 
+                console.log(res.data.sellers);         
                        }
         }
     
@@ -35,7 +36,9 @@ function ShowSellers() {
 
 
     const cols = [
-        { field: 'id', headerName: 'ID', width: 300 },
+        { field: 'id', headerName: 'ID', width: 300, renderCell: (id) => {
+            return <Link to={`/user/${id.value}`}>`${id.value}`</Link>
+        } },
         {
             field: "fullname",
             headerName: 'Fullname',
@@ -43,10 +46,10 @@ function ShowSellers() {
         }
     ]
 
-    const rowData = sellers?.map(seller => {
+    const rowData = vendors?.map(vendor => {
         return{
-            fullname: seller?._id,
-            id: seller?._id
+            fullname: vendor?.username,
+            id: vendor?._id
         }
         
             })
@@ -58,6 +61,7 @@ function ShowSellers() {
 
     
     return(<div style={{width: "100%", height: 400}} >
+
     <DataGrid 
     
     rows={rowData}
