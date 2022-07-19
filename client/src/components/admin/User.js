@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react"
 import {GlobalState} from "../../GlobalState"
 import axios from "axios"
 import { useParams } from "react-router-dom"
+import "./user.css"
 
 
 function User() {
@@ -64,7 +65,7 @@ function User() {
           .reduce((data, byte) => data + String.fromCharCode(byte), '')
       );
       
-    console.log(base64String);
+
        
 return(
     <>
