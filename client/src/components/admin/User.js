@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react"
 import {GlobalState} from "../../GlobalState"
 import axios from "axios"
 import { useParams } from "react-router-dom"
+import { Card, ListGroup } from "react-bootstrap"
 import "./user.css"
 
 
@@ -68,29 +69,30 @@ function User() {
 
        
 return(
-    <>
+    <div className="col d-flex justify-content-center centered">
+    <Card style={{width: '18rem'}}>
+        <Card.Img variant="top" src={`data:image/jpg;base64, ${base64String}`}  />
 
-<div className="detail">
+        <Card.Body>
+            <Card.Title>{single.fullname}</Card.Title>
+            <ListGroup variant="flush">
+            <ListGroup.Item><span style={{color: "red"}}>username: </span>{single.username}</ListGroup.Item>
+            <ListGroup.Item> <span style={{color: "blue"}}>Email: </span> {single.email}</ListGroup.Item>
+            <ListGroup.Item> <span style={{color: "green"}}>Location: </span> {single.location}</ListGroup.Item>
+            <ListGroup.Item><span style={{color: "red"}}>Security: </span> {single.question}</ListGroup.Item>
+            </ListGroup>
+            
+            <Card.Link href="#">Upgrade User</Card.Link>
+            <Card.Link href="#">Delete User</Card.Link>
+            
+        </Card.Body>
+    </Card>
 
-    <img src={`data:image/jpg;base64, ${base64String}`} alt="hi" />
-     
-    
-                
-                <div className="box-detail">
-                    <div className="row">
-                        <h2>{single.fullname}</h2>
-                        <h6>{single.username}</h6>
-                    </div>
-                    <span>{single.email}</span>
-                    <p>{single.location}</p>
-                    <p>{single.question}</p>
-                    
-                </div>
-            </div>
 
-    
-    
-    </>
+
+
+
+    </div>
 
 )
 
