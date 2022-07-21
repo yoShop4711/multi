@@ -237,7 +237,7 @@ AuthRoute.get(
   })
 );
 
-AuthRoute.post('/auth/change_role/:id', verify, authAdmin, asyncHandler(async(req, res) => {
+AuthRoute.put('/auth/change_role/:id', verify, authAdmin, asyncHandler(async(req, res) => {
 
 const {id} = req.params
 
@@ -248,9 +248,21 @@ await User.findByIdAndUpdate(
   
 )
 
-res.json({msg: 'user has been succesfully upgraded to seller.'})
+res.json({msg: 'user status succesfully changed..'})
 
 }))
+
+
+AuthRoute.delete('/auth/delete_user/:id', verify, authAdmin, asyncHandler(async(req, res) => {
+const {id} = req.params
+
+await User.findByIdAndDelete(id)
+
+res.json({msg: 'user succesfully deleted...'})
+
+
+}))
+
 
 AuthRoute.post('/auth/show_user/:id', verify, authAdmin, asyncHandler(async(req, res) => {
 

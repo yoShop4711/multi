@@ -82,8 +82,8 @@ return(
             <ListGroup.Item><span style={{color: "red"}}>Security: </span> {single.question}</ListGroup.Item>
             </ListGroup>
             
-            <Card.Link href="#">Upgrade User</Card.Link>
-            <Card.Link href="#">Delete User</Card.Link>
+            <Card.Link href={`/user_status/${single._id}`}>User Status</Card.Link>
+            <Card.Link href={`/delete_user/${single._id}`}>Delete User</Card.Link>
             
         </Card.Body>
     </Card>

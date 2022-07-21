@@ -11,6 +11,7 @@ import ShowUsers from "./components/admin/ShowUsers"
 import ShowSellers from "./components/admin/ShowSellers"
 import DeleteUser from "./components/admin/DeleteUser"
 import FilterUsers from "./components/admin/FilterUsers"
+import UserStatus from "./components/admin/UserStatus"
 
 
 function App() {
@@ -36,7 +37,8 @@ function App() {
 <Route path="/user/:id" element={<User />} />
 <Route path="/show_users" element={<ShowUsers />} />
 <Route path="/show_sellers" element={<ShowSellers />} />
-<Route path="/delete_user" element={<DeleteUser />} />
+<Route path="/delete_user/:id" element={<DeleteUser />} />
+<Route path="/user_status/:id" element={<UserStatus />} />
 <Route path="/filter_users" element={<FilterUsers />} />
 
 
