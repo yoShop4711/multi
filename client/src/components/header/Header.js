@@ -37,7 +37,7 @@ function Header() {
     const loggedRouter = () =>{
         return(
             <>
-                <li><Link to="/history">History</Link></li>
+                {/* <li><Link to="/history">History</Link></li> */}
                 <li><Link to="/" onClick={logoutUser}>Logout</Link></li>
             </>
         )
@@ -59,6 +59,7 @@ function Header() {
         <li><Link to="/show_users">Show Users</Link></li>
         <li><Link to="/show_sellers">Show Sellers</Link></li>
         <li><Link to="/filter_users">Filter Users</Link></li>
+        <li><Link to="/create_category">Create Category</Link></li>
         
         
         

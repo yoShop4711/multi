@@ -18,14 +18,15 @@ const ProductSchema = mongoose.Schema({
         required: true
     },
     productImage: {
-        type: Array,
-        default: []
+        data: Buffer,
+        contentType: String
+    
     },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    categoryId: {
+    category: {
         type: String,
         required: true
     }

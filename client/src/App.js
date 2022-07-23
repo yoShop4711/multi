@@ -12,6 +12,8 @@ import ShowSellers from "./components/admin/ShowSellers"
 import DeleteUser from "./components/admin/DeleteUser"
 import FilterUsers from "./components/admin/FilterUsers"
 import UserStatus from "./components/admin/UserStatus"
+import CreateProduct from "./components/seller/CreateProduct"
+import CreateCategory from "./components/admin/CreateCategory"
 
 
 function App() {
@@ -40,6 +42,8 @@ function App() {
 <Route path="/delete_user/:id" element={<DeleteUser />} />
 <Route path="/user_status/:id" element={<UserStatus />} />
 <Route path="/filter_users" element={<FilterUsers />} />
+<Route path="/create_product" element={< CreateProduct />} />
+<Route path="/create_category" element={ < CreateCategory /> } />
 
 
 

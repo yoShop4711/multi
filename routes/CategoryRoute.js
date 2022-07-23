@@ -2,11 +2,7 @@ const catRoute = require('express').Router()
 const Category = require('../models/categoryModel')
 const asyncHandler = require('express-async-handler')
 const verify = require('../middleware/verify')
-const authSeller = require('../middleware/authSeller')
 const authAdmin = require('../middleware/authAdmin')
-
-
-
 
 
 catRoute.get('/api/categories', asyncHandler(async(req, res) => {
@@ -18,7 +14,9 @@ catRoute.get('/api/categories', asyncHandler(async(req, res) => {
 
 }))
 
-catRoute.post('/api/create_category', verify, authSeller, asyncHandler(async(req, res) => {
+
+
+catRoute.post('/api/create_category', verify, authAdmin, asyncHandler(async(req, res) => {
 
     const {name} = req.body
 
@@ -31,9 +29,9 @@ catRoute.post('/api/create_category', verify, authSeller, asyncHandler(async(req
     if(categ) return res.json({msg: "the category you tried to create already exists. Please create a new one"})
 
 
-    const category = await Category.create({name})
+     await Category.create({name})
 
-res.json(category)
+res.json({msg: "category created successfully"})
 
 
 
