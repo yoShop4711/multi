@@ -9,6 +9,7 @@ function CategoriesApi() {
         const getCategories = async () =>{
             const res = await axios.get('http://localhost:5000/api/categories')
             setCategories(res.data)
+            // console.log(categories);
         }
 
         getCategories()

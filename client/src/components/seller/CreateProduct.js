@@ -1,10 +1,8 @@
 import axios from "axios"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
 import {GlobalState} from "../../GlobalState"
 import "./createproduct.css"
-
-
-
 
 function CreateProduct() {
     const state = useContext(GlobalState)
@@ -12,38 +10,91 @@ function CreateProduct() {
     const proprietor = state.userApi.owner[0]
     
 
-    const initialState = {
+
+    const [product, setProduct] = useState({
         productName: "",
         productDescription: "",
         productQuantity: "",
         productAvailability: "",
         category: "",
+        productImage: " ",
         createdBy: proprietor
-    }
-
-    const [products, setProduct] = useState(initialState)
+    })
     const[images, setImages] = useState(false)
-    
+    const[categories] = state.CategoriesApi.categories   
     const [isSeller] = state.userApi.isSeller
     const toke = state.token[0]
+
+    const {id} = useParams()
+
+    // const imake = product.createdBy
+
+    // console.log(imake);
+
+    const[products] = state.ProductsApi.products
+    const [onEdit, setOnEdit] = useState(false)
+    const [callback, setCallback] = state.ProductsApi.callback
+
+    // useEffect(()=> {
+
+    //     if(id) {
+    //         setOnEdit(true)
+    //         products.forEach(product => {
+    //             if(product._id === id) {
+    //                 setProduct(product)
+    //                 setImages(product.images)
+    //             }
+    //         })
+    //     } else {
+    //         setOnEdit(false)
+    //         setProduct(initialState)
+    //         setImages(false)
+    //     }
+
+    // }, [id, products])
+
+
+    const handleUpload = async(event) => {
+
+        if(!isSeller) return alert("you are not a seller")
+
+        const file = event.target.files[0]
+
+        if(file.type !== 'image/jpg') // 1mb
+                return alert("File format is incorrect. must be jpg.")
+
+        
+        
+        let formData = new formData()
+        formData.append('file', product.productImage)
+
+        
+
+
+
+
+
+    }
+
 
     
     return( <>
             <div className="create_product">
-            <div className="upload">
-                <input type="file" name="file" id="file_up" />
-                
-                     {/* <div id="file_img"><Loading /></div> */}
+            
+            <form>
 
-                    <div id="file_img" >
-                        <img src="..." alt="imageio"/>
-                        <span>X</span>
-                    </div>
-                
+            <div className="row">
+            <div className="upload">
+                <input type="file"  id="file_up" />
                 
             </div>
 
-            <form>
+                    
+
+                </div>
+
+
+
                 <div className="row">
                     <label htmlFor="product_id">Product ID</label>
                     <input type="text" name="product_id" id="product_id" required />
@@ -74,13 +125,13 @@ function CreateProduct() {
                     <label htmlFor="categories">Categories: </label>
                     <select name="category"  >
                         <option value="">Please select a category</option>
-                        {/* {
+                        {
                             categories.map(category => (
                                 <option value={category._id} key={category._id}>
                                     {category.name}
                                 </option>
                             ))
-                        } */}
+                        }
                     </select>
                 </div>
 
