@@ -27,7 +27,7 @@ db.once('open', function(){
 
   app.use(cors())
   app.use("/public", express.static(path.join(__dirname, '/public')));
-  app.use("/products", express.static(path.join(__dirname, '/products')));
+  // app.use("/products", express.static(path.join(__dirname, '/products')));
   app.use(express.json())
   app.use(express.urlencoded({extended: true}))
   app.use(cookieParser())

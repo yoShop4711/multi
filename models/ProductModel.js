@@ -17,20 +17,21 @@ const ProductSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     productImage: {
         data: Buffer,
         contentType: String
     
     },
-    createdBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    },
-    category: {
+     categor: {
         type: String,
         required: true
     }
-
 })
+
+
 
 module.exports = mongoose.model('Product', ProductSchema)

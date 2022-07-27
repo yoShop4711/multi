@@ -7,6 +7,7 @@ const authAdmin = require("../middleware/authAdmin");
 const asyncHandler = require("express-async-handler");
 const multer = require("multer");
 const { query } = require("express");
+const fs = require('fs')
 
 
 class APIfeatures {
@@ -55,7 +56,7 @@ class APIfeatures {
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./products/");
+    cb(null, "./public/");
   },
   filename: function (req, file, cb) {
     cb(null, new Date().toISOString().replace(/:/g, "-") + file.originalname);
@@ -68,15 +69,15 @@ const upload = multer({ storage });
 ProductRoute.post(
   "/api/create_product",
   verify,
+  upload.single('productImage'),
   authSeller,
-  upload.single("productImage"),
   asyncHandler(async (req, res) => {
     const {
       productName,
       productDescription,
       productQuantity,
       productAvailability,
-      categoryId,
+      categor,
     } = req.body;
 
     if (
@@ -84,44 +85,55 @@ ProductRoute.post(
       !productDescription ||
       !productQuantity ||
       !productAvailability ||
-      !categoryId
+      !categor
     ) {
       res.json({ msg: "fields cannot be empty when making a post." });
     }
 
+    
+      
     const product = await Product({
       productName,
       productDescription,
       productQuantity,
       productAvailability,
-      categoryId,
       productImage: { 
-        data: fs.readFileSync("./products/" + req.file.filename),
-        contentType: "image/jpg"
-        }, 
-      createdBy: req.user.id,
+      data: fs.readFileSync("./public/" + req.file.filename),
+      contentType: "image/jpg"
+      },
+        categor,
+      createdBy: req.user.id
+      
+      
     });
 
-    await product.save(function (error) {
+   
+    
+     await product.save(function (error) {
       if (!error) {
         Product.find({})
           .populate("createdBy")
           .exec(function (error, products) {
-            console.log(JSON.stringify(products, null, "\t"));
+            JSON.stringify(products, null, "\t")
+            
           });
       }
     });
 
-    res.json({ msg: "product created" });
+    res.json({msg: 'product has been created'})
+
+  
   })
 );
 
-ProductRoute.put('/api/update_product/:id', verify, authSeller, asyncHandler(async(req, res) => {
+ProductRoute.put('/api/update_product/:id',  verify, authSeller, asyncHandler(async(req, res) => {
   const {id} = req.params
 
   const product = await Product.findById(id)
   const seller = await User.findById(req.user)
 
+
+ 
 
 
   if ( product.createdBy.toString() !== seller._id.toString()) {
@@ -131,10 +143,10 @@ ProductRoute.put('/api/update_product/:id', verify, authSeller, asyncHandler(asy
   await Product.findByIdAndUpdate(
     product,
     req.body,
-    {new: true}
+  {new: true}
   )
 
-  res.json({msg: 'updated'})
+  res.json({msg: "updated"})
 
 
 

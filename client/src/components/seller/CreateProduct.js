@@ -1,129 +1,115 @@
 import axios from "axios"
-import { useContext, useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useContext,  useState } from "react"
 import {GlobalState} from "../../GlobalState"
 import "./createproduct.css"
 
 function CreateProduct() {
     const state = useContext(GlobalState)
 
-    const proprietor = state.userApi.owner[0]
     
-
-
     const [product, setProduct] = useState({
         productName: "",
         productDescription: "",
         productQuantity: "",
         productAvailability: "",
-        category: "",
-        productImage: " ",
-        createdBy: proprietor
+        productImage: false,
+        categor: "",
+    
     })
-    const[images, setImages] = useState(false)
+    
     const[categories] = state.CategoriesApi.categories   
     const [isSeller] = state.userApi.isSeller
-    const toke = state.token[0]
-
-    const {id} = useParams()
-
-    // const imake = product.createdBy
-
-    // console.log(imake);
-
-    const[products] = state.ProductsApi.products
-    const [onEdit, setOnEdit] = useState(false)
-    const [callback, setCallback] = state.ProductsApi.callback
-
-    // useEffect(()=> {
-
-    //     if(id) {
-    //         setOnEdit(true)
-    //         products.forEach(product => {
-    //             if(product._id === id) {
-    //                 setProduct(product)
-    //                 setImages(product.images)
-    //             }
-    //         })
-    //     } else {
-    //         setOnEdit(false)
-    //         setProduct(initialState)
-    //         setImages(false)
-    //     }
-
-    // }, [id, products])
+    const [token] = state.token
 
 
-    const handleUpload = async(event) => {
+    const handleChangeInput = (event )=>{ 
+        if(event.target.name === "productImage") {
+            setProduct({[event.target.name]: event.target.files[0]})
+
+        } else{
+        const {name, value} = event.target
+        setProduct({...product, [name]:value}) }
+    }
+
+    
+    
+    const handleSubmit = async(event) => {
+        event.preventDefault();
+        
 
         if(!isSeller) return alert("you are not a seller")
 
-        const file = event.target.files[0]
-
-        if(file.type !== 'image/jpg') // 1mb
-                return alert("File format is incorrect. must be jpg.")
 
         
-        
-        let formData = new formData()
-        formData.append('file', product.productImage)
+        let formData = new FormData()
+    
+        formData.append('productName', product.productName)
+        formData.append('productDescription', product.productDescription)
+        formData.append('productQuantity', product.productQuantity)
+        formData.append('productAvailability', product.productAvailability)
+        formData.append('productImage', product.productImage)
+        formData.append('categor', product.categor) 
 
-        
+        console.log(product);
 
 
+           const res = await axios.post('http://localhost:5000/api/create_product',   formData , {
+            headers: { Authorization: `Bearer ${token}`}
+        })
 
-
-
+        alert(res.data.msg)
+       
     }
 
+
+    
 
     
     return( <>
             <div className="create_product">
             
-            <form>
+            
 
-            <div className="row">
-            <div className="upload">
-                <input type="file"  id="file_up" />
+            
+              <form onSubmit={handleSubmit} encType="multipart/form-data">
+              <div className="row">
+            <div>
+                <input type="file" name="productImage"  onChange={handleChangeInput}    />
                 
-            </div>
-
-                    
-
-                </div>
-
-
+              </div>
+              </div>
 
                 <div className="row">
-                    <label htmlFor="product_id">Product ID</label>
-                    <input type="text" name="product_id" id="product_id" required />
+                    <label htmlFor="productName">Product Name</label>
+                    <input type="text" name="productName" value={product.productName} onChange={handleChangeInput} id="productName" required />
                 </div>
 
-                <div className="row">
-                    <label htmlFor="title">Title</label>
-                    <input type="text" name="title" id="title" required />
-                </div>
-
-                <div className="row">
+                
+                {/* <div className="row">
                     <label htmlFor="price">Price</label>
                     <input type="number" name="price" id="price" required />
-                </div>
+                </div> */}
 
                 <div className="row">
-                    <label htmlFor="description">Description</label>
-                    <textarea type="text" name="description" id="description" required
+                    <label htmlFor="description">Product Description</label>
+                    <textarea type="text" name="productDescription" value={product.productDescription} onChange={handleChangeInput} id="productionDescription" required
                  rows="5"  />
                 </div>
 
                 <div className="row">
-                    <label htmlFor="content">Content</label>
-                    <textarea type="text" name="content" id="content" required rows="7"  />
+                    <label htmlFor="productQuantity">Product Quantity</label>
+                    <input type="text" name="productQuantity" value={product.productQuantity} onChange={handleChangeInput} id="productQuantity" required   />
                 </div>
 
                 <div className="row">
+                    <label htmlFor="productAvailability">Product Availability</label>
+                    <input type="text" name="productAvailability" value={product.productAvailability} onChange={handleChangeInput} id="productAvailability" required   />
+                </div>
+
+
+                <div className="row">
                     <label htmlFor="categories">Categories: </label>
-                    <select name="category"  >
+                    <select name="categor"  value={product.categor} onChange={handleChangeInput} >
                         <option value="">Please select a category</option>
                         {
                             categories.map(category => (
