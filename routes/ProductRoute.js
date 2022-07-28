@@ -77,6 +77,7 @@ ProductRoute.post(
       productDescription,
       productQuantity,
       productAvailability,
+      productPrice,
       categor,
     } = req.body;
 
@@ -85,6 +86,7 @@ ProductRoute.post(
       !productDescription ||
       !productQuantity ||
       !productAvailability ||
+      !productPrice ||
       !categor
     ) {
       res.json({ msg: "fields cannot be empty when making a post." });
@@ -97,6 +99,7 @@ ProductRoute.post(
       productDescription,
       productQuantity,
       productAvailability,
+      productPrice,
       productImage: { 
       data: fs.readFileSync("./public/" + req.file.filename),
       contentType: "image/jpg"

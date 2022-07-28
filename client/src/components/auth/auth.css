@@ -28,6 +28,13 @@
 .login_page .row a{
     color: crimson;
 }
+
+.login_page .input > input {
+
+    border: 0 !important;
+    color: red;
+
+}
 .login_page .row button{
     width: 150px;
     padding: 10px 0;

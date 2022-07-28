@@ -56,7 +56,7 @@ AuthRoute.post(
   const salt =  await bcrypt.genSalt(10);
   const hashedPassword = await  bcrypt.hash(password, salt);
 
-  const user = await User.create  ({
+ await User.create  ({
       fullname,
     username,
     email,
@@ -70,7 +70,7 @@ AuthRoute.post(
     location,
   });
 
-    accesstoken = createAccessToken({id: User._id})
+   const accesstoken = createAccessToken({id: User._id})
     const refreshtoken = createRefreshToken({id: User._id})
 
 
@@ -82,7 +82,7 @@ AuthRoute.post(
 
 
 
-    res.json({ accesstoken, user});
+    res.json({msg: "account created"});
   })
 );
 

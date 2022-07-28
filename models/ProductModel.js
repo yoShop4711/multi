@@ -26,10 +26,15 @@ const ProductSchema = mongoose.Schema({
         contentType: String
     
     },
+    productPrice: {
+        type: Number,
+        required: true
+    },
      categor: {
         type: String,
         required: true
     }
+
 })
 
 

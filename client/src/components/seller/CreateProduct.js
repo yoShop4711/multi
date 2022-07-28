@@ -14,6 +14,7 @@ function CreateProduct() {
         productAvailability: "",
         productImage: false,
         categor: "",
+        productPrice: ""
     
     })
     
@@ -49,8 +50,9 @@ function CreateProduct() {
         formData.append('productAvailability', product.productAvailability)
         formData.append('productImage', product.productImage)
         formData.append('categor', product.categor) 
+        formData.append('productPrice', product.productPrice)
 
-        console.log(product);
+    
 
 
            const res = await axios.post('http://localhost:5000/api/create_product',   formData , {
@@ -61,15 +63,8 @@ function CreateProduct() {
        
     }
 
-
-    
-
-    
     return( <>
             <div className="create_product">
-            
-            
-
             
               <form onSubmit={handleSubmit} encType="multipart/form-data">
               <div className="row">
@@ -85,10 +80,10 @@ function CreateProduct() {
                 </div>
 
                 
-                {/* <div className="row">
+                <div className="row">
                     <label htmlFor="price">Price</label>
-                    <input type="number" name="price" id="price" required />
-                </div> */}
+                    <input type="number" name="productPrice" id="productPrice" value={product.productPrice} onChange={handleChangeInput}  required />
+                </div>
 
                 <div className="row">
                     <label htmlFor="description">Product Description</label>
